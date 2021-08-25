@@ -1,8 +1,9 @@
-$debug: false;
-
 $pageWidth: 1200px;
 $scintecoColor: #00beed;
-$improveColor: #8DD033;;
+$improveColor: #8dd033;
+$headerBackgroundColor: #fff;
+$pageBackgroundColor: #f7f9fa;
+$footerBackgroundColor: #b5c3ce1a;
 $colorDimmer: rgba(0, 0, 0, 0.1);
 
 $white: #fff;
@@ -11,22 +12,19 @@ $dark: #191414;
 $medium-screen-font-factor: 0.75;
 $mobile-screen-font-factor: 0.4;
 
-
-
 @function scale-font($font-size, $screen) {
   $factor: 1;
 
-  @if $screen=="mobile" {
+  @if $screen== "mobile" {
     $factor: $mobile-screen-font-factor;
   }
 
-  @if $screen=="medium" {
+  @if $screen== "medium" {
     $factor: $medium-screen-font-factor;
   }
 
-  @return ($font-size - 16px) * $factor+16px;
+  @return ($font-size - 16px) * $factor + 16px;
 }
-
 
 $mobile-screen-horizontal-margin-factor: 0.35;
 $medium-screen-horizontal-margin-factor: $mobile-screen-horizontal-margin-factor / 2;
@@ -40,66 +38,20 @@ $break-large: 1440px;
     @media only screen and (max-width: $break-small) {
       @content;
     }
-  }
-
-  @else if $media==medium-screens {
+  } @else if $media==medium-screens {
     @media only screen and (min-width: $break-small + 1) and (max-width: $break-medium - 1) {
       @content;
     }
-  }
-
-  @else if $media==wide-screens {
+  } @else if $media==wide-screens {
     @media only screen and (min-width: $break-medium) {
       @content;
     }
-  }
-
-  @else if $media==ultra-wide-screens {
+  } @else if $media==ultra-wide-screens {
     @media only screen and (min-width: $break-large) {
       @content;
     }
   }
 }
-
-
-@if $debug {
-  $scintecoColor: #00beed85;
-
-  .debug {
-    #debugScreen {
-      position: absolute;
-      margin-left: -120px;
-      height: 10000px;
-      width: 100%;
-      background-image: url("../xtras/dev/01 Improve - acop11 - single page 04 - desktop large.png");
-      background-position: top left;
-      background-repeat: no-repeat;
-      background-size: unset;
-      opacity: .3;
-      z-index: -100;
-
-      @include respond-to(mobile) {
-        margin-left: -30px;
-        background-image: url("../xtras/dev/01 Improve - acop11 - single page 04 - mobile.png");
-      }
-    }
-
-    .debugTool {
-      position: fixed;
-      right: 0;
-    }
-  }
-}
-
-@else {
-  .debug {
-    display: none;
-  }
-}
-
-
-
-
 
 /*! HTML5 Boilerplate v8.0.0 | MIT License | https://html5boilerplate.com/ */
 
@@ -114,15 +66,11 @@ $break-large: 1440px;
    Base styles: opinionated defaults
    ========================================================================== */
 
-
-
-
-
-
 html {
-  color: #222;
+  color: $dark;
   font-size: 1em;
   line-height: 1.4;
+  overflow-y: scroll;
 }
 
 /*
@@ -195,16 +143,14 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-
-
 body {
   font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
   color: $dark;
   margin: 0;
-  hyphens: auto;
 
   $font-size: 20px;
   font-size: $font-size;
+  background-color: $pageBackgroundColor;
 
   @include respond-to(medium-screens) {
     font-size: scale-font($font-size, "medium");
@@ -215,29 +161,32 @@ body {
   }
 }
 
-
 h1,
 h2,
 h3 {
-  margin: 14px 0 0 0;
+  margin: 14px 0 30px 0;
 }
 
 h1 {
   padding: 0;
-  line-height: 1.11;
+  /*   line-height: 82px;
+ */
+  $font-size: 82px;
 
-  $font-size: 72px;
-  $letter-spacing: -1px;
+  $letter-spacing: -1.14px;
   letter-spacing: $letter-spacing;
   font-size: $font-size;
+  line-height: $font-size;
 
   @include respond-to(medium-screens) {
     font-size: scale-font($font-size, "medium");
+    line-height: scale-font($font-size, "medium");
     letter-spacing: $letter-spacing * $medium-screen-font-factor;
   }
 
   @include respond-to(mobile) {
     font-size: scale-font($font-size, "mobile");
+    line-height: scale-font($font-size, "mobile");
     letter-spacing: $letter-spacing * $mobile-screen-font-factor;
   }
 }
@@ -280,12 +229,10 @@ h3 {
   }
 }
 
-p {
-  margin: 15px 0 20px 0;  
-  text-align: justify;
+h4 {
+  line-height: 1.19;
+  $font-size: 24px;
 
-
-  $font-size: 20px;
   font-size: $font-size;
 
   @include respond-to(medium-screens) {
@@ -297,25 +244,45 @@ p {
   }
 }
 
+p {
+  margin: 15px 0 20px 0;
+  /* text-align: justify; */
+
+  $font-size: 20px;
+  font-size: $font-size;
+  hyphens: auto;
+
+  @include respond-to(medium-screens) {
+    font-size: scale-font($font-size, "medium");
+  }
+
+  @include respond-to(mobile) {
+    font-size: scale-font($font-size, "mobile");
+  }
+}
+
+a,
+a:visited {
+  color: $dark;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 
 .right {
   float: right;
 }
 
 .section {
-  @if $debug {
-    outline: solid 1px red;
-  }
-
   &.top-spacing {
-    margin-top: 7.2%;
+    margin-top: 5.1%;
   }
 }
 
-.accent-item .section {
+/* .accent-item .section {
   $padding-top: 83px;
   $padding-bottom: 85px;
-
 
   padding-top: $padding-top;
   padding-bottom: $padding-bottom;
@@ -329,14 +296,13 @@ p {
     padding-top: $padding-top * $mobile-screen-horizontal-margin-factor;
     padding-bottom: $padding-bottom * $mobile-screen-horizontal-margin-factor;
   }
-}
+} */
 
 .container {
   max-width: $pageWidth;
-  width: 90%;
+  width: 70%;
 
   margin: auto;
-
 
   /*
   &.grid {
@@ -373,7 +339,6 @@ p {
   }*/
 }
 
-
 .grid {
   min-width: 0;
   min-height: 0;
@@ -382,7 +347,7 @@ p {
   /*gap: 10% 10%;*/
   gap: 10px 40px;
 
-  &>div {
+  & > div {
     min-width: 0;
     min-height: 0;
   }
@@ -404,11 +369,9 @@ p {
       grid-template-columns: repeat(1, 1fr);
     }
   }
-
-
 }
 
-.icon-paragraph {
+/* .icon-paragraph {
   padding-bottom: 200px;
 
   display: grid;
@@ -419,7 +382,7 @@ p {
     grid-template-columns: auto;
   }
 
-  &>.icon-paragraph-text {
+  & > .icon-paragraph-text {
     margin-right: 0;
 
     grid-column: 1;
@@ -428,13 +391,9 @@ p {
     @include respond-to(mobile) {
       grid-row: 2;
     }
-
-    @if $debug {
-      outline: #000 1px solid;
-    }
   }
 
-  &>.paragraph-icon-wrapper {
+  & > .paragraph-icon-wrapper {
     position: relative;
     padding-bottom: 40%;
     max-height: 100px;
@@ -447,13 +406,7 @@ p {
       padding-bottom: 20%;
     }
 
-
-    @if $debug {
-      outline: red 1px solid;
-    }
-
-
-    &>.paragraph-icon {
+    & > .paragraph-icon {
       display: block;
       position: absolute;
       top: 0;
@@ -461,34 +414,26 @@ p {
       width: 100%;
       height: 100%;
       background-size: contain;
-      /*background-position: center right;*/
-
-      @if $debug {
-        outline: red 1px solid;
-      }
 
       @include respond-to(mobile) {
         background-position: center;
       }
     }
   }
-}
+} */
 
 .feature-icon-wrapper {
-
   position: relative;
-  padding-bottom: 32%;
+  padding-bottom: 11%;
 
   box-sizing: border-box;
 
-
-
   @include respond-to(medium-screens) {
-    padding-bottom: 26%;
+    padding-bottom: 9%;
   }
 
   @include respond-to(mobile) {
-    padding-bottom: 16%;
+    padding-bottom: 5%;
   }
 
   .feature-icon {
@@ -500,53 +445,65 @@ p {
     height: 100%;
     background-position: center left;
 
-    max-height: 120px;
-
+    max-height: 44px;
 
     @include respond-to(medium-screens) {
-      max-height: 90px;
+      max-height: 30px;
     }
 
     @include respond-to(mobile) {
       background-position: center;
-      max-height: 80px;
+      max-height: 27px;
     }
   }
 }
 
-.accent-item {
-  background-color: $scintecoColor;
+.header {
+  $margin-bottom: 110px;
+  margin-bottom: $margin-bottom;
 
   &,
   a,
   a:visited {
     color: $white;
   }
-}
 
-.header {
-  background: #000000;
-  $font-size: 24px;
+  /* background-image: url(../img/scinteco_icon_lightblue.svg); */
 
-  $border-top-width: 6px;
+  /* background: #000000; */
+  background-color: $scintecoColor;
 
-  font-size: $font-size;
-  border-top: $scintecoColor $border-top-width solid;
+  $padding-top: 72px;
+  $padding-bottom: 156px;
+  padding-top: $padding-top;
+  padding-bottom: $padding-bottom;
 
   @include respond-to(medium-screens) {
-    ffont-size: scale-font($font-size, "medium");
-    border-top-width: $border-top-width * $medium-screen-font-factor;
+    padding-top: $padding-top * $mobile-screen-horizontal-margin-factor;
+    padding-bottom: $padding-bottom * $mobile-screen-horizontal-margin-factor;
+  }
+  @include respond-to(mobile) {
+    padding-top: $padding-top * $mobile-screen-horizontal-margin-factor;
+    padding-bottom: $padding-bottom * $mobile-screen-horizontal-margin-factor;
   }
 
-  @include respond-to(mobile) {
-    font-size: scale-font($font-size, "mobile");
-    border-top-width: $border-top-width * $mobile-screen-font-factor;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right bottom;
+
+  &.improve-logo {
+    background-image: url(../img/icon-bg-improve-cropped.svg);
+  }
+  &.contact-logo {
+    background-image: url(../img/icon-bg-contact-cropped.svg);
+  }
+  &.scinteco-logo {
+    background-image: url(../img/icon-bg-scinteco-cropped.svg);
   }
 
   h1 {
-    margin: 0;
-
-    $margin-top: 121px;
+    margin: 0 20% 0 0;
+    $margin-top: 0px;
     margin-top: $margin-top;
 
     @include respond-to(medium-screens) {
@@ -559,20 +516,25 @@ p {
   }
 
   p {
-    margin-top: 15px;
+    margin-top: 29px;
+    font-weight: bolder;
+    $font-size: 24px;
+    font-size: $font-size;
+
+    @include respond-to(medium-screens) {
+      font-size: scale-font($font-size, "medium");
+    }
+
+    @include respond-to(mobile) {
+      font-size: scale-font($font-size, "mobile");
+    }
   }
 
-
-  .down-link-wrapper {
+  /* .down-link-wrapper {
     position: relative;
     margin-top: 7.2%;
     padding-bottom: 2%;
     min-height: 10px;
-
-
-    @if $debug {
-      outline: green 1px solid;
-    }
 
     .down-link {
       display: block;
@@ -583,7 +545,7 @@ p {
       height: 100%;
       background-position: left center;
     }
-  }
+  } */
 }
 
 .section.tools {
@@ -592,7 +554,6 @@ p {
   .grid {
     /*gap: 16% 10%;*/
     gap: 52px 10%;
-
 
     @include respond-to(medium-screens) {
       gap: 26px 6%;
@@ -603,12 +564,11 @@ p {
       grid-template-columns: repeat(2, 1fr);
     }
 
-
-    &>div {
+    & > div {
       position: relative;
       padding-bottom: 57%;
 
-      &>div {
+      & > div {
         border: solid 1px rgba(25, 20, 20, 0.2);
         /*min-height: 180px;*/
 
@@ -624,10 +584,7 @@ p {
 
 .improve-color {
   color: $improveColor;
-  
 }
-
-
 
 .kicker {
   font-size: 20px;
@@ -654,119 +611,109 @@ p {
     background-size: cover;
   }
 
-
-  &.header {
+  /*   &.header {
     background-image: url("../img/header_image_stream.jpg");
-  }
+     "scinteco_icon_blue.svg" 
+  } */
 
   &.data-lineage {
-    background-image: url("../img/icon_data_lineage.svg")
+    background-image: url("../img/icon_data_lineage.svg");
   }
-
   &.audit-trail {
-    background-image: url("../img/icon_audit_trail.svg")
+    background-image: url("../img/icon_audit_trail.svg");
   }
-
   &.file-history {
-    background-image: url("../img/icon_file_history.svg")
+    background-image: url("../img/icon_file_history.svg");
   }
-
   &.dmg {
-    background-image: url("../img/icon_dmg.svg")
+    background-image: url("../img/icon_dmg.svg");
   }
-
   &.discoverability {
-    background-image: url("../img/icon_discoverability.svg")
+    background-image: url("../img/icon_discoverability.svg");
   }
-
   &.documentation {
-    background-image: url("../img/icon_documentation.svg")
+    background-image: url("../img/icon_documentation.svg");
   }
-
   &.docker {
-    background-image: url("../img/icon_docker.svg")
+    background-image: url("../img/icon_docker.svg");
   }
-
   &.icon-grid {
-    background-image: url("../img/icon_grid.svg")
+    background-image: url("../img/icon_grid.svg");
   }
-
   &.exploratory-work {
-    background-image: url("../img/icon_exploratory_work.svg")
+    background-image: url("../img/icon_exploratory_work.svg");
   }
-
   &.repo-image {
     background-image: url("../img/improve_repository.png");
   }
 
-  &.tool-nonmem {
-    background-image: url("../img/tool_nonmem.png");
+  &.icon-maps {
+    background-image: url("../img/icon-maps.svg");
+  }
+  &.icon-ticket {
+    background-image: url("../img/icon-ticket.svg");
+  }
+  &.icon-linkedin {
+    background-image: url("../img/icon-linkedin.svg");
   }
 
-  &.tool-monolix {
-    background-image: url("../img/tool_monolix.png");
+  &.logo-nonmem {
+    background-image: url("../img/third-party-logos/nonmem.png");
   }
-
-  &.tool-pumas {
-    background-image: url("../img/tool_pumas.png");
+  &.logo-monolix {
+    background-image: url("../img/third-party-logos/monolix.png");
   }
-
-  &.tool-sas {
-    background-image: url("../img/tool_sas.png");
+  &.logo-pumas {
+    background-image: url("../img/third-party-logos/pumas.png");
   }
-
-  &.tool-r {
-    background-image: url("../img/tool_r.png");
+  &.logo-sas {
+    background-image: url("../img/third-party-logos/sas.png");
   }
-
-  &.tool-mathworks {
-    background-image: url("../img/tool_mathworks.png");
+  &.logo-matlab {
+    background-image: url("../img/third-party-logos/matlab.png");
   }
-
-  &.tool-rstudio {
-    background-image: url("../img/tool_rstudio.png");
+  &.logo-rstudio {
+    background-image: url("../img/third-party-logos/rstudio.png");
   }
-
+  &.logo-frauenhauser {
+    background-image: url("../img/third-party-logos/frauenhauser.svg");
+  }
+  &.logo-frauenhauser-wien {
+    background-image: url("../img/third-party-logos/frauenhauser-wien.png");
+  }
+  &.logo-wiener-tafel {
+    background-image: url("../img/third-party-logos/wiener-tafel.svg");
+  }
   &.logo-scinteco {
     background-image: url("../img/logo_scinteco.svg");
   }
-
-  &.logo-acop {
-    background-image: url("../img/logo_acop.png");
-  }
-
-  &.icon-trace-and-control {
-    background-image: url("../img/01_icon_trace_and_control.svg");
-  }
-
-  &.icon-more-features {
-    background-image: url("../img/02_icon_more_features.svg");
-  }
-
-  &.icon-meet-and-win {
-    background-image: url("../img/03_icon_meet_and_win.svg");
-  }
-
-  &.icon-arrow-down {
-    background-image: url("../img/icon_arrow_down.svg?v=2");
-  }
 }
 
+.link-icon {
+  padding-left: 30px;
+  margin-right: 10px;
+}
 
-.logos {
-  padding-top: 20px;
-  padding-bottom: 15px;
-  max-width: $pageWidth + 86px;
+.top-menu {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  background-color: $headerBackgroundColor;
+
+  .top-menu-wrapper {
+    width: 86%;
+    max-width: $pageWidth + 86px;
+    margin: auto;
+  }
 
   .logo-wrapper {
     position: relative;
-    padding-bottom: 3.5%;
-    width: 50%;
-    min-height: 36px;
+    padding-bottom: 2.9%;
+    width: 30%;
+    min-height: 16px;
     float: left;
     margin: 0;
 
-    a {
+    .logo-scinteco {
       display: block;
       position: absolute;
       top: 0;
@@ -774,17 +721,41 @@ p {
       width: 100%;
       height: 100%;
       background-size: contain;
-
-      &.logo-scinteco {
-        background-position: left;
-      }
-
-      &.logo-acop {
-        background-position: right;
-      }
+      background-position: left;
     }
   }
 
+  ul.navigation {
+    list-style-type: none;
+    padding: 3.6% 0 0 0;
+    margin: 0;
+    float: right;
+
+    li {
+      display: block;
+      float: left;
+      margin-left: 24px;
+    }
+
+    a {
+      font-weight: bold;
+      font-size: 20px;
+      color: $dark;
+      display: block;
+      /* line-height: 58px; */
+      padding: 3px;
+      text-decoration: none;
+
+      &.active {
+        color: $scintecoColor;
+      }
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: $scintecoColor;
+    }
+  }
 }
 
 .repo-image-wrapper {
@@ -865,12 +836,25 @@ a.button {
   }
 }
 
-.meet-us {
-  margin-top: 120px;
+.imprint-content {
+  padding-bottom: 100px;
+}
+
+.content {
+  padding-bottom: 100px;
+}
+
+body.contact {
+  .content {
+    background-image: url(../img/scinteco-contact-bg.jpg);
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-bottom: 30%;
+  }
 }
 
 .footer {
-
   $font-size: 16px;
   font-size: $font-size;
 
@@ -882,15 +866,14 @@ a.button {
     font-size: scale-font($font-size, "mobile");
   }
 
-
-
-  &>div {
-    background-color: $colorDimmer;
-    padding: 17px 0;
+  & > div {
+    background-color: $footerBackgroundColor;
+    padding: 30px 0;
   }
 
   a {
     text-decoration: none;
+    color: $dark;
   }
 }
 
@@ -903,14 +886,12 @@ a.button {
   height: 0;
 
   box-sizing: border-box;
-  transition: .5s ease;
+  transition: 0.5s ease;
   overflow: hidden;
   z-index: 100;
 }
 
 .imprint-overlay {
-  text-align: center;
-
   .imprint-container {
     background-color: $scintecoColor;
     box-sizing: border-box;
@@ -921,13 +902,13 @@ a.button {
       background-color: $white;
       box-sizing: border-box;
       height: 100%;
-      padding: 20px 50px;
+      padding: 80px 50px;
       overflow-y: scroll;
       overflow-x: hidden;
 
       .imprint-content {
         margin: auto;
-        max-width: 700px;
+        max-width: 940px;
       }
     }
 
@@ -939,10 +920,25 @@ a.button {
       }
     }
 
+    label {
+      font-weight: bolder;
+
+      &::after {
+        content: " ";
+      }
+    }
+
+    .emphasize {
+      font-weight: bolder;
+      &.colored {
+        color: $scintecoColor;
+      }
+    }
+
     a {
       text-decoration: none;
       font-weight: bold;
-      color: $dark;
+      color: $scintecoColor;
 
       &:hover {
         text-decoration: underline;
@@ -961,6 +957,17 @@ a.button {
           text-decoration: none;
         }
       }
+
+      &.button {
+        color: $white;
+        margin: 64px 660px 0 3px;
+        padding: 26px 112px;
+        border-radius: 3px;
+        background-color: $scintecoColor;
+        &:hover {
+          text-decoration: none;
+        }
+      }
     }
   }
 
@@ -973,8 +980,6 @@ a.button {
     margin-bottom: 10px;
     text-align: left;
 
-
-
     .col1 {
       grid-column: 1;
       text-align: right;
@@ -982,19 +987,13 @@ a.button {
 
     .col2 {
       grid-column: 2;
-
     }
   }
-
 }
-
-
 
 /* ==========================================================================
    Helper classes
    ========================================================================== */
-
-
 
 .hidden,
 [hidden] {
@@ -1080,10 +1079,7 @@ a.button {
   /* Style adjustments for viewports that meet the condition */
 }
 
-@media print,
-(-webkit-min-device-pixel-ratio: 1.25),
-(min-resolution: 1.25dppx),
-(min-resolution: 120dpi) {
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {
   /* Style adjustments for high resolution devices */
 }
 
@@ -1094,7 +1090,6 @@ a.button {
    ========================================================================== */
 
 @media print {
-
   *,
   *::before,
   *::after {
@@ -1111,11 +1106,11 @@ a.button {
   }
 
   a[href]::after {
-    content: " ("attr(href) ")";
+    content: " (" attr(href) ")";
   }
 
   abbr[title]::after {
-    content: " ("attr(title) ")";
+    content: " (" attr(title) ")";
   }
 
   /*
@@ -1160,5 +1155,40 @@ a.button {
   h2,
   h3 {
     page-break-after: avoid;
+  }
+}
+
+.carousel {
+  position: relative;
+  height: 44px;
+  margin-top: 38px;
+
+  div {
+    height: 100%;
+    width: 100%;
+  }
+
+  .slide {
+    width: 100%;
+    height: 200%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -50%;
+    /* transform: scale(0.9); */
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+  }
+
+  &.left .slide .image {
+    background-position-x: left;
+  }
+
+  .showing {
+    z-index: 1;
+    transform: none;
+    opacity: 1;
   }
 }

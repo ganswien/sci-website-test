@@ -22,3 +22,32 @@ function closeOverlay(cancelIfSelection) {
         document.getElementById("imprint-overlay").style.height = 0;
     return false;
 }
+
+const first = document.querySelector('.slide');
+console.log(first);
+
+const slide = () => {
+  const before = document.querySelector('.showing');
+  if (before) {
+    before
+      .classList
+      .remove('showing');
+    const next = before.nextElementSibling;
+    if (next) {
+      next
+        .classList
+        .add('showing')
+    } else {  
+      first
+        .classList
+        .add('showing');
+    }
+  } else {
+    first
+      .classList
+      .add('showing');
+  }
+}
+slide();
+if(first)
+    setInterval(slide, 2500);
